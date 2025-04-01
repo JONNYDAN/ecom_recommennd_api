@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exam Result</title>
+  <style>
+    /* Center content and style */
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+    }
+    
+    .result-container {
+      background-color: #e0f7fa;
+      padding: 30px;
+      border-radius: 15px;
+      width: 60%;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .result-container img {
+      width: 120px;
+      margin-bottom: 15px;
+    }
+
+    .result-container h2 {
+      color: green;
+      font-size: 36px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .result-container p {
+      color: #333;
+      font-size: 16px;
+      margin: 5px 0;
+    }
+
+    .result-container .table {
+      margin-top: 20px;
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+
+    .result-container .table th, .result-container .table td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .result-container .table th {
+      background-color: #a5d6a7;
+      color: white;
+    }
+
+    .result-container .motivation {
+      margin-top: 20px;
+      font-style: italic;
+      color: green;
+      font-size: 18px;
+    }
+
+    .footer {
+      margin-top: 30px;
+      font-size: 16px;
+    }
+
+    .footer a {
+      color: #2196f3;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="result-container">
+    <!-- Header Section -->
+    <img src="congratulation.png" alt="Congratulation">
+    <h2>Trình Độ {{level}}</h2>
+    <p><strong>Họ và tên:</strong> {{fullName}}</p>
+    <p><strong>Ngày tham gia:</strong> {{examDate}}</p>
+
+    <!-- Congratulations Message -->
+    <p class="motivation">"Chúc mừng bạn đã vượt qua kỳ thi! Đây là thành quả xứng đáng cho những nỗ lực của bạn, nhưng hãy tiếp tục rèn luyện để đạt được những điều cao hơn."</p>
+
+    <!-- Score Table -->
+    <table class="table">
+      <thead>
+        <tr>
+          <th colspan="{{sections.length}}">Điểm thành phần</th>
+        </tr>
+        <tr>
+          {{#each sections}}
+            <th>{{this.title}}</th>
+          {{/each}}
+          <th>Tổng điểm</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          {{#each sections}}
+            <td>{{this.score}}/{{this.totalScore}}</td>
+          {{/each}}
+          <td>{{totalScore}}/180</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Additional Motivation Message -->
+    <p class="motivation">"Điểm số chỉ là một phần nhỏ trong hành trình học tập; chính sự cố gắng và sự tiến bộ của bạn mới là điều đáng trân trọng nhất."</p>
+
+    <!-- Footer Section -->
+    <div class="footer">
+      <p>khodethiJLPT.com</p>
+      <a href="https://khodethiJLPT.com">Visit our website</a>
+    </div>
+  </div>
+</body>
+</html>
