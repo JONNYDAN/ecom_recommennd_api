@@ -192,7 +192,7 @@ exports.updateOrder = async (req, res) => {
   }
 };
 
-// Delete order by ID
+// Delete order and orderitems by ID
 exports.deleteOrder = async (req, res) => {
   try {
     const order = await Order.findById(req.params.id);
@@ -204,13 +204,8 @@ exports.deleteOrder = async (req, res) => {
       });
     }
     
-    // Only allow admins to delete orders
-    if (!req.user.isAdmin) {
-      return res.status(403).json({
-        success: false,
-        message: 'Not authorized to delete this order'
-      });
-    }
+    // Delete associated order items
+    await OrderItem.deleteMany({ order: req.params.id });
     
     await Order.findByIdAndDelete(req.params.id);
     
