@@ -14,6 +14,7 @@ const categoryRoutes = require('./routes/category_router');
 const productRouter = require('./routes/product_router');
 const customerFeedbackRouter = require('./routes/customer_feedback_router');
 const orderRouter = require('./routes/order_routes');
+const orderRecommendationsRouter = require('./routes/recommendation_routes');
 
 const { notFound, errorHandler } = require('./middlewares/error_handler');
 const morgan = require('morgan');
@@ -68,6 +69,7 @@ app.use('/api/categories', categoryRoutes);
 app.use('/api/products', productRouter);
 app.use('/api/feedbacks', customerFeedbackRouter);
 app.use('/api/orders', orderRouter);
+app.use('/api/recommendations', orderRecommendationsRouter);
 
 app.use(notFound);
 app.use(errorHandler);

@@ -42,34 +42,41 @@ const createPost = asyncHandler(async (req, res) => {
 });
 
 const getAllPosts = asyncHandler(async (req, res) => {
-    const search = req.query.search;
-
     try {
-        let query = {};
-
+        const { search, page = 1, limit = 10 } = req.query;
+        const skip = (page - 1) * limit;
+        
+        const filter = {};
         if (search) {
-            query.$or = [
-                { title: { $regex: search, $options: 'i' } },  // Tìm kiếm theo tiêu đề
-                { description: { $regex: search, $options: 'i' } }, // Tìm kiếm theo mô tả
-                { content: { $regex: search, $options: 'i' } }, // Tìm kiếm theo nội dung
+            filter.$or = [
+                { title: { $regex: search, $options: 'i' } },
+                { description: { $regex: search, $options: 'i' } },
+                { content: { $regex: search, $options: 'i' } }
             ];
         }
-
-        const allPosts = await Post.find(query); // Không cần populate author
-        const postCount = allPosts.length;
-
-        if (allPosts.length > 0) {
-            res.json({
-                code: 200,
-                status: true,
-                count: postCount,
-                posts: allPosts,
-            });
-        } else {
-            res.status(400).json({ message: 'No posts found' });
-        }
-    } catch (err) {
-        throw new Error(err);
+        
+        const posts = await Post.find(filter)
+            .sort({ createdAt: -1 })
+            .limit(parseInt(limit))
+            .skip(skip);
+            
+        const total = await Post.countDocuments(filter);
+        
+        return res.status(200).json({
+            success: true,
+            data: posts,
+            pagination: {
+                total,
+                page: parseInt(page),
+                limit: parseInt(limit),
+                pages: Math.ceil(total / limit)
+            }
+        });
+    } catch (error) {
+        return res.status(400).json({
+            success: false,
+            message: error.message
+        });
     }
 });
 

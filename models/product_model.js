@@ -35,6 +35,10 @@ const productSchema = new Schema({
   }],
   description: {
     type: String
+  },
+  salesCount: {
+    type: Number,
+    default: 0
   }
 }, {
   timestamps: true
